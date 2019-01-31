@@ -1,0 +1,13 @@
+.section{
+	background: pink;
+	margin: 0 auto;
+	text-align: right
+}
+
+.head{
+	margin-right:5em;
+}
+.blue{
+	background: blue;
+	color: white;
+}
