@@ -55,7 +55,7 @@ public class UserDao {
         	try {
         		conn = DBManager.getConnection();
 
-        		String sql = "SELECT * FROM user";
+        		String sql = "SELECT * FROM user where id >1";
         		Statement stmt = conn.createStatement();
         		ResultSet rs = stmt.executeQuery(sql);
 
@@ -86,7 +86,38 @@ public class UserDao {
         	}
         	return userList;
     }
+
+    public void newregi(String loginId, String password, String username, String dateofbirth){
+        Connection conn = null;
+    	// データベースへ接続
+        try {
+        conn = DBManager.getConnection();
+        // INSERT文を準備
+      //文字列結合（＋のことだよ）してSQL文をつなぐ時にとは半角スペースがあることを確認します。
+        String sql = "INSERT INTO User(login_id, name, birth_date, password, create_date, update_date) VALUES (?,?,?,?, now(), now())";
+        // INSERTを実行
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, loginId);
+        stmt.setString(2, username);
+        stmt.setString(3, dateofbirth);
+        stmt.setString(4, password);
+
+        stmt.executeUpdate();
+
+        stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // データベース切断
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+	}
 }
-
-
 
