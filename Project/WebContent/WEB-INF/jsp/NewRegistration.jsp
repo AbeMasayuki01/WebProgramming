@@ -34,13 +34,12 @@
     <input type="text" name="dateofbirth">
 
     <p>
-        <input type="submit" value="登録">
-    </p>
-
-    <p>
-        <input type="submit" value="戻る">
+        <button type="submit">登録</button>
     </p>
 </form>
+
+   <a href="AllUsersServlet">戻る</a>
+
 
 </body>
 </html>

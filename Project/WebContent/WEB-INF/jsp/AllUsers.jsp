@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="section">
-<span class="head">ユーザ名さん</span><span class="logout">ログアウト</span>
+<span class="head">${userInfo.name}さん</span><a href="UserLogoutServlet">ログアウト</a>
 </div>
 	<h1 class="allusers">ユーザ一覧</h1>
 
@@ -46,7 +46,7 @@
                      <td>${user.birth_Date}</td>
                      <!-- TODO 未実装；ログインボタンの表示制御を行う -->
                      <td>
-                       <a href="UserDetailServlet?id=${user.id}">詳細</a>
+                       <a href="UserDetailsServlet?id=${user.id}">詳細</a>
                        <a href="UserUpdateServlet?id=${user.id}">更新</a>
                        <a href ="UserDeleteServlet?id=${user.id}">削除</a>
                      </td>

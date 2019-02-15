@@ -6,19 +6,20 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="AllUsers_style.css">
+
 <title>login</title>
 </head>
 <body>
 <div class="container">
 
     <c:if test="${errMsg != null}" >
-        <div class="alert alert-danger" role="alert">
+        <div class="red">
           ${errMsg}
         </div>
     </c:if>
 
 	<form class="form-signin" action="UserLoginServlet" method="post">
-		<span id="reauth-email" class="reauth-email"></span>
 
 		<h2>ログイン画面</h2>
 

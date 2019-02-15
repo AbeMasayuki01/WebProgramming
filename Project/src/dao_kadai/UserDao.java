@@ -119,5 +119,138 @@ public class UserDao {
             }
         }
 	}
+
+    public UserBeans findById(String id) {
+        Connection conn = null;
+
+        try {
+			conn = DBManager.getConnection();
+
+			String sql ="SELECT * FROM user WHERE id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,id);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			if (!rs.next()) {
+				return null;
+			}
+			int iD = rs.getInt("id");
+            String loginId = rs.getString("login_id");
+            String name = rs.getString("name");
+            Date birthDate = rs.getDate("birth_Date");
+            String password = rs.getString("password");
+            String createDate = rs.getString("create_Date");
+            String updateDate = rs.getString("update_Date");
+
+			return new UserBeans(iD, loginId, name, birthDate, password, createDate, updateDate);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+
+    }
+    public void deleteById(String id) {
+        Connection conn = null;
+
+        try {
+			conn = DBManager.getConnection();
+
+			String sql ="DELETE FROM user WHERE id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,id);
+
+			pStmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    }
+
+    public void updateById(String id, String password, String name, String birth_date) {
+        Connection conn = null;
+
+        try {
+			conn = DBManager.getConnection();
+
+			String sql ="UPDATE user SET password = ? , name=? , birth_date =? , update_date= now() WHERE id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,password);
+			pStmt.setString(2,name);
+			pStmt.setString(3,birth_date);
+			pStmt.setString(4,id);
+
+
+			pStmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    }
+    public void updateById(String id, String name, String birth_date) {
+        Connection conn = null;
+
+        try {
+			conn = DBManager.getConnection();
+
+			String sql ="UPDATE user SET name=? , birth_date =? , update_date= now() WHERE id = ?";
+
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1,name);
+			pStmt.setString(2,birth_date);
+			pStmt.setString(3,id);
+
+
+			pStmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    }
+
 }
 

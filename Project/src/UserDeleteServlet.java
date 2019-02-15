@@ -1,11 +1,16 @@
 
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import dao_kadai.UserBeans;
+import dao_kadai.UserDao;
 
 /**
  * Servlet implementation class UserDeleteServlet
@@ -13,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/UserDeleteServlet")
 public class UserDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,7 +32,20 @@ public class UserDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		String id = request.getParameter("id");
+
+		UserDao userdao = new UserDao();
+		UserBeans userdelete = userdao.findById(id);
+
+		request.setAttribute("userDelete", userdelete);
+
+
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.Delete.jsp");
+		dispatcher.forward(request, response);
+
+
 	}
 
 	/**
@@ -35,7 +53,17 @@ public class UserDeleteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		String id = request.getParameter("id");
+
+		UserDao userdao = new UserDao();
+		userdao.deleteById(id);
+
+		response.sendRedirect("AllUsersServlet");
+
+
+
+
 	}
 
 }

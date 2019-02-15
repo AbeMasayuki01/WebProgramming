@@ -51,7 +51,7 @@ public class UserLoginServlet extends HttpServlet {
 		UserBeans userbeans = userdao.findByLoginInfo(loginId, password);
 
 		if (userbeans == null) {
-			request.setAttribute("errMsg", "ログインに失敗しました。");
+			request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.Login.jsp");
 
 	        dispatcher.forward(request, response);

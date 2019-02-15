@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
@@ -11,26 +11,29 @@
 <title>details</title>
 </head>
 <body>
-<div class="section">
-<span class="head">ユーザ名さん</span><span class="logout">ログアウト</span>
-</div>
-    <h1 class="details">ユーザ情報詳細参照</h1>
+	<div class="section">
+		<%
+			request.getAttribute("userDetail");
+		%>
+		<span class="head">${userDetail.name}さん</span><a href="UserLogoutServlet">ログアウト</a>
+	</div>
+	<h1 class="details">ユーザ情報詳細参照</h1>
 
-    <p>ログインID id001</p>
+	<p>${userDetail.login_id}</p>
 
-    <p>ユーザ名 添田大地</p>
+	<p>${userDetail.name}</p>
+
+	<p>生年月日 ${userDetail.birth_Date}</p>
+
+	<p>登録日時</p>
+	<p>${userDetail.create_Date}</p>
+
+	<p>更新日時</p>
+	<p>${userDetail.update_Date}</p>
 
 
-    <p>生年月日 1991/4/1</p>
+	   <a href="AllUsersServlet">戻る</a>
 
-    <p>登録日時</p><p>2019年1月30日17：10</p>
-
-    <p>更新日時</p><p>2019年1月30日17：11</p>
-
-
-    <p>
-        <input type="submit" value="戻る">
-    </p>
 
 </body>
 </html>

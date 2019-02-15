@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao_kadai.UserBeans;
+import dao_kadai.UserDao;
+
 /**
  * Servlet implementation class UserDetailsServlet
  */
@@ -31,6 +34,12 @@ public class UserDetailsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		String id = request.getParameter("id");
+
+		UserDao userdao = new UserDao();
+		UserBeans userdetail = userdao.findById(id);
+
+		request.setAttribute("userDetail", userdetail);
+
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.Details.jsp");
 		dispatcher.forward(request, response);
