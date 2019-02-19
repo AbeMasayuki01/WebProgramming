@@ -47,8 +47,12 @@
                      <!-- TODO 未実装；ログインボタンの表示制御を行う -->
                      <td>
                        <a href="UserDetailsServlet?id=${user.id}">詳細</a>
+
+                       <c:if test="${user.id==1}">
+
                        <a href="UserUpdateServlet?id=${user.id}">更新</a>
                        <a href ="UserDeleteServlet?id=${user.id}">削除</a>
+                       </c:if>
                      </td>
                    </tr>
                  </c:forEach>

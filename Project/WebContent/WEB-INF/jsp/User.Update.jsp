@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +10,15 @@
 <title>update</title>
 </head>
 <body>
+<div class="container">
+
+    <c:if test="${errMsg != null}" >
+        <div class="red">
+          ${errMsg}
+        </div>
+    </c:if>
+</div><!-- /container -->
+
 <div class="section">
 <span class="head">${userInfo.name}さん</span><a href="UserLogoutServlet">ログアウト</a>
 </div>
@@ -25,7 +36,7 @@
     <input type="password" name="password">
 
     <P>パスワード確認</P>
-    <input type="password" name="password">
+    <input type="password" name="re_password">
 
     <p>ユーザ名</p>
     <input type="text" name="name" value="${userUpdate.name}">

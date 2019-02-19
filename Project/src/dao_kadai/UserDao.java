@@ -30,7 +30,7 @@ public class UserDao {
 
 			String loginIdData = rs.getString("login_id");
 			String nameData = rs.getString("name");
-
+//以下、ログインセッションの時に保持しているデータ
 			return new UserBeans(loginIdData, nameData);
 
 		} catch (SQLException e) {
@@ -54,6 +54,7 @@ public class UserDao {
 
         	try {
         		conn = DBManager.getConnection();
+//1じゃないとき  id != 1
 
         		String sql = "SELECT * FROM user where id >1";
         		Statement stmt = conn.createStatement();
@@ -87,7 +88,8 @@ public class UserDao {
         	return userList;
     }
 
-    public void newregi(String loginId, String password, String username, String dateofbirth){
+    public void newregi(String loginId, String password, String username, String dateofbirth)
+    throws SQLException{
         Connection conn = null;
     	// データベースへ接続
         try {
@@ -106,8 +108,8 @@ public class UserDao {
 
         stmt.close();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            //throwでサーブレット内での処理に移行
         } finally {
             // データベース切断
             if (conn != null) {
@@ -115,6 +117,7 @@ public class UserDao {
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
+
                 }
             }
         }
