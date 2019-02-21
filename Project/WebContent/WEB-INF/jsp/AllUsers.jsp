@@ -39,6 +39,8 @@
 			<th></th>
 		</tr>
 		<tbody>
+		<!-- リクエストスコープのuserlistをuserとして扱う。userlistの中はuserbeansのフィールドが入っている。
+		＜user.longi_id＞はuserList（user）の中身であるbeansのlogin_idをEL式で表している。 -->
                  <c:forEach var="user" items="${userList}" >
                    <tr>
                      <td>${user.login_id}</td>
@@ -46,13 +48,21 @@
                      <td>${user.birth_Date}</td>
                      <!-- TODO 未実装；ログインボタンの表示制御を行う -->
                      <td>
+                     <c:if test="${userInfo.login_id=='admin'}">
                        <a href="UserDetailsServlet?id=${user.id}">詳細</a>
-
-                       <c:if test="${user.id==1}">
-
                        <a href="UserUpdateServlet?id=${user.id}">更新</a>
                        <a href ="UserDeleteServlet?id=${user.id}">削除</a>
                        </c:if>
+
+                        <c:if test="${userInfo.login_id!='admin'}">
+                       <a href="UserDetailsServlet?id=${user.id}">詳細</a>
+                       </c:if>
+
+                       <c:if test="${userInfo.login_id==user.login_id}">
+                       <a href="UserDetailsServlet?id=${user.id}">詳細</a>
+                       <a href="UserUpdateServlet?id=${user.id}">更新</a>
+                       </c:if>
+
                      </td>
                    </tr>
                  </c:forEach>

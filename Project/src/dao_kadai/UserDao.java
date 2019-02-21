@@ -1,5 +1,9 @@
 package dao_kadai;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -8,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.DatatypeConverter;
 
 public class UserDao {
 	public UserBeans findByLoginInfo(String loginId, String password) {
@@ -21,7 +27,7 @@ public class UserDao {
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
-			pStmt.setString(2, password);
+			pStmt.setString(2, encrypt(password));
 			ResultSet rs = pStmt.executeQuery();
 
 			if (!rs.next()) {
@@ -88,6 +94,61 @@ public class UserDao {
         	return userList;
     }
 
+    public List<UserBeans> findSearch(String loginIdP, String nameP, String usernameP, String dateofbirthP) {
+        Connection conn = null;
+        List<UserBeans> userList = new ArrayList<UserBeans>();
+
+        	try {
+        		conn = DBManager.getConnection();
+//1じゃないとき  id != 1
+
+        		String sql = "SELECT * FROM user where id >1";
+
+        		if(!loginIdP.isEmpty()) {
+        			sql += "AND login_id = '"+ loginIdP + "'";
+        		}
+        		if(!nameP.isEmpty()) {
+        			sql += "AND login_id = '"+ nameP + "'";
+        		}
+        		if(!usernameP.isEmpty()) {
+        			sql += "AND login_id = '"+ usernameP + "'";
+        		}
+        		if(!dateofbirthP.isEmpty()) {
+        			sql += "AND login_id = '"+ dateofbirthP + "'";
+        		}
+        		System.out.println(sql);
+
+        		Statement stmt = conn.createStatement();
+        		ResultSet rs = stmt.executeQuery(sql);
+
+        		while (rs.next()) {
+        			int id = rs.getInt("id");
+                    String loginId = rs.getString("login_id");
+                    String name = rs.getString("name");
+                    Date birthDate = rs.getDate("birth_Date");
+                    String password = rs.getString("password");
+                    String createDate = rs.getString("create_Date");
+                    String updateDate = rs.getString("update_Date");
+                    UserBeans user = new UserBeans(id, loginId, name, birthDate,password, createDate,updateDate);
+
+                    userList.add(user);
+        		}
+        	}catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+        	} finally {
+        		if (conn != null) {
+        			try {
+        				conn.close();
+        			} catch(SQLException e) {
+        				e.printStackTrace();
+        				return null;
+        			}
+        		}
+        	}
+        	return userList;
+    }
+
     public void newregi(String loginId, String password, String username, String dateofbirth)
     throws SQLException{
         Connection conn = null;
@@ -102,7 +163,7 @@ public class UserDao {
         stmt.setString(1, loginId);
         stmt.setString(2, username);
         stmt.setString(3, dateofbirth);
-        stmt.setString(4, password);
+        stmt.setString(4, encrypt(password));
 
         stmt.executeUpdate();
 
@@ -202,7 +263,7 @@ public class UserDao {
 			String sql ="UPDATE user SET password = ? , name=? , birth_date =? , update_date= now() WHERE id = ?";
 
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1,password);
+			pStmt.setString(1,encrypt(password));
 			pStmt.setString(2,name);
 			pStmt.setString(3,birth_date);
 			pStmt.setString(4,id);
@@ -253,6 +314,25 @@ public class UserDao {
 				}
 			}
 		}
+    }
+    private String encrypt(String password) {
+    	//ハッシュ生成前にバイト配列に置き換える際のCharset
+    	Charset charset = StandardCharsets.UTF_8;
+    	//ハッシュアルゴリズム
+    	String algorithm = "MD5";
+
+    	//ハッシュ生成処理
+    	byte[] bytes = null;
+		try {
+			bytes = MessageDigest.getInstance(algorithm).digest(password.getBytes(charset));
+		} catch (NoSuchAlgorithmException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+    	String result = DatatypeConverter.printHexBinary(bytes);
+
+
+    	return result ;
     }
 
 }
