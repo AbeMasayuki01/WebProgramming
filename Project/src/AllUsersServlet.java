@@ -47,7 +47,23 @@ public class AllUsersServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+        request.setCharacterEncoding("UTF-8");
+
+		String loginID = request.getParameter("loginID");
+		String name = request.getParameter("name");
+		String dateofbirthabove = request.getParameter("dateofbirthabove");
+		String dateofbirthbelow = request.getParameter("dateofbirthbelow");
+
+		UserDao userDao = new UserDao();
+		List<UserBeans> userList = userDao.findSearch(loginID,name,dateofbirthabove,dateofbirthbelow);
+
+		request.setAttribute("userList", userList);
+
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/AllUsers.jsp");
+		dispatcher.forward(request, response);
+
+
 	}
 }

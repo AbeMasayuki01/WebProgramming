@@ -17,20 +17,22 @@
 	<p>
 		<a href="NewRegistrationServlet">新規登録</a>
 	</p>
-
+<form action = "AllUsersServlet" method="post">
 	<p>ログインID</p>
 	<input type="text" name="loginID">
 
 	<p>ユーザ名</p>
-	<input type="text" name="username">
+	<input type="text" name="name">
 
 	<p>生年月日</p>
-	<input type="text" value="" placeholder="年/月/日">
+	<input type="text" value="" placeholder="年/月/日" name = dateofbirthabove>
 	<p>
 		〜 <p>
-	<input type="text" value="" placeholder="年/月/日"><p>
-		<input type="submit" value="検索">
+	<input type="text" value="" placeholder="年/月/日" name = dateofbirthbelow><p>
 	</p>
+
+	<input type="submit" value="検索">
+</form>
 	<table border="1">
 		<tr>
 			<th>ログインID</th>

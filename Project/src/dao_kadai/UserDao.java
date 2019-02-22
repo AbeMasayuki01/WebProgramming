@@ -94,7 +94,7 @@ public class UserDao {
         	return userList;
     }
 
-    public List<UserBeans> findSearch(String loginIdP, String nameP, String usernameP, String dateofbirthP) {
+    public List<UserBeans> findSearch(String loginIdP, String nameP, String dateofbirthPabove, String dateofbirthPbelow) {
         Connection conn = null;
         List<UserBeans> userList = new ArrayList<UserBeans>();
 
@@ -105,18 +105,17 @@ public class UserDao {
         		String sql = "SELECT * FROM user where id >1";
 
         		if(!loginIdP.isEmpty()) {
-        			sql += "AND login_id = '"+ loginIdP + "'";
+        			sql += " AND login_id = '"+ loginIdP + "'";
         		}
         		if(!nameP.isEmpty()) {
-        			sql += "AND login_id = '"+ nameP + "'";
+        			sql += " AND name LIKE '"+ '%'+ nameP +'%' + "'";
         		}
-        		if(!usernameP.isEmpty()) {
-        			sql += "AND login_id = '"+ usernameP + "'";
+        		if(!dateofbirthPabove.isEmpty()) {
+        			sql += " AND birth_Date <= '"+ dateofbirthPabove + "'";
         		}
-        		if(!dateofbirthP.isEmpty()) {
-        			sql += "AND login_id = '"+ dateofbirthP + "'";
+        		if(!dateofbirthPbelow.isEmpty()) {
+        			sql += " AND birth_Date >= '"+ dateofbirthPbelow + "'";
         		}
-        		System.out.println(sql);
 
         		Statement stmt = conn.createStatement();
         		ResultSet rs = stmt.executeQuery(sql);
