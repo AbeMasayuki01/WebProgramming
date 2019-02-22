@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao_kadai.UserBeans;
 import dao_kadai.UserDao;
@@ -31,7 +32,11 @@ public class UserUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userInfo")==null) {
+			response.sendRedirect("UserLoginServlet");
+			return;
+		}
 		String id = request.getParameter("id");
 
 		UserDao userdao = new UserDao();

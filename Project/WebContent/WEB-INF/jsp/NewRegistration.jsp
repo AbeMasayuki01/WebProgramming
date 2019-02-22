@@ -20,7 +20,7 @@
 </div><!-- /container -->
 <div class="section">
 
-<span class="head">ユーザ名さん</span><span class="logout">ログアウト</span>
+<span class="head">${userInfo.name}さん</span><a href="UserLogoutServlet">ログアウト</a>
 
 </div>
 <form action = "NewRegistrationServlet" method="post">

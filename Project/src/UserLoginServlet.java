@@ -32,8 +32,17 @@ public class UserLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("userInfo")!=null) {
+			response.sendRedirect("AllUsersServlet");
+			return;
+		}
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/User.Login.jsp");
         dispatcher.forward(request, response);
+
+
+
 
 	}
 
@@ -41,7 +50,10 @@ public class UserLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+
+
+
 		request.setCharacterEncoding("UTF-8");
 
 		String loginId = request.getParameter("login_id");
@@ -58,7 +70,7 @@ public class UserLoginServlet extends HttpServlet {
 	        return;
 		}
 
-		HttpSession session = request.getSession();
+
 		session.setAttribute("userInfo", userbeans);
 
 		response.sendRedirect("AllUsersServlet");

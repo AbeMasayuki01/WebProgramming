@@ -61,7 +61,7 @@
                        </c:if>
 
                        <c:if test="${userInfo.login_id==user.login_id}">
-                       <a href="UserDetailsServlet?id=${user.id}">詳細</a>
+
                        <a href="UserUpdateServlet?id=${user.id}">更新</a>
                        </c:if>
 

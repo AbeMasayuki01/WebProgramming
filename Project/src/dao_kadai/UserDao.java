@@ -111,10 +111,10 @@ public class UserDao {
         			sql += " AND name LIKE '"+ '%'+ nameP +'%' + "'";
         		}
         		if(!dateofbirthPabove.isEmpty()) {
-        			sql += " AND birth_Date <= '"+ dateofbirthPabove + "'";
+        			sql += " AND birth_Date >= '"+ dateofbirthPabove + "'";
         		}
         		if(!dateofbirthPbelow.isEmpty()) {
-        			sql += " AND birth_Date >= '"+ dateofbirthPbelow + "'";
+        			sql += " AND birth_Date <= '"+ dateofbirthPbelow + "'";
         		}
 
         		Statement stmt = conn.createStatement();
@@ -331,7 +331,7 @@ public class UserDao {
     	String result = DatatypeConverter.printHexBinary(bytes);
 
 
-    	return result ;
+    	return result;
     }
 
 }
