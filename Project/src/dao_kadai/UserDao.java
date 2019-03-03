@@ -163,6 +163,7 @@ public class UserDao {
         stmt.setString(2, username);
         stmt.setString(3, dateofbirth);
         stmt.setString(4, encrypt(password));
+        //
 
         stmt.executeUpdate();
 
